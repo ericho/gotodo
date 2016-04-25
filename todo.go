@@ -1,7 +1,7 @@
 package main
 
 import (
-//	"flag"
+	//	"flag"
 	"fmt"
 	"os"
 )
@@ -28,8 +28,8 @@ func readactionfromargs(arg string) (action int) {
 }
 
 func readargs(args []string) (action int, err error) {
-	
-	if (args == nil) {
+
+	if args == nil {
 		return 0, nil
 	}
 
