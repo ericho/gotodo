@@ -1,92 +1,84 @@
 package main
 
 import (
-	//	"flag"
-	"errors"
+	"flag"
 	"fmt"
 	"os"
 )
 
-const (
-	ADD = 1 << iota
-	LIST
-	DONE
-	CLEAR
-)
-
-func readactionfromargs(arg string) (action int, err error) {
-	switch {
-	case "add" == arg:
-		return ADD, nil
-	case "list" == arg:
-		return LIST, nil
-	case "done" == arg:
-		return DONE, nil
-	case "clear" == arg:
-		return CLEAR, nil
-	}
-	return 0, errors.New("Undefined option received.")
-}
-
-func readargs(args []string) (action int, err error) {
-
-	if args == nil || len(args) == 0 {
+func parseArgs(args []string) (action int, err error) {
+	if args == nil || flag.NArg() == 0 {
 		return 0, nil
 	}
 
-	action, err = readactionfromargs(args[0])
-	return action, err
-}
-
-func executeoption(action int, args []string) (int, error) {
-	switch {
-	case action == ADD:
-		return add_task(args)
-	case action == LIST:
-		return list_tasks()
-	case action == DONE:
-		return done_task(args)
-	case action == CLEAR:
-		return clear_tasks()
+	switch args[0] {
+	case "add":
+		return addNewTask(args)
+	case "list":
+		return listTasks()
+	case "done":
+		return doneTask(args)
+	case "clear":
+		return clearTasks()
+	default:
+		return 0, fmt.Errorf("Unknown option provided: %s", args[0])
 	}
-	return 1, errors.New("Invalid option provided")
 }
 
-func add_task(args []string) (int, error) {
+func addNewTask(args []string) (int, error) {
+	if len(args) != 2 {
+		return 0, fmt.Errorf("Incomplete arguments provided")
+	}
+	err := AddTaskToFile(args[1])
+	fmt.Printf("Adding '%s' task. Not implemented yet\n", args[1])
 	// Receive one parameter, a quoted string that will be added
 	// into the file .gotodo.txt
 	// Will read the ID and assign a new one for this task
-	return 0, nil
+	return 0, err
 }
 
-func list_tasks() (int, error) {
+func listTasks() (int, error) {
+	fmt.Printf("Listing all tasks. Not implemented yet\n")
 	// Will read the file content and print the list of tasks
 	return 0, nil
 }
 
-func done_task(args []string) (int, error) {
+func doneTask(args []string) (int, error) {
+	if len(args) != 2 {
+		return 0, fmt.Errorf("Incomplete arguments provided")
+	}
+	fmt.Printf("Task '%s' marked as done. Not implemented yet.\n ", args[1])
 	// Receive an id number as a parameter, this tasks will be put
 	// done with the [x] mark
 	return 0, nil
 }
 
-func clear_tasks() (int, error) {
+func clearTasks() (int, error) {
+	fmt.Printf("Clearing all the tasks. Not implemented yet.\n")
 	// Delete all the file content and create a new header.
 	return 0, nil
 }
 
+func usage() {
+	fmt.Fprintf(os.Stderr, "Usage: %s [add] <task> | [list] | [done] <task id> | [clear]\n", os.Args[0])
+	os.Exit(1)
+}
+
 func main() {
-	fmt.Println(len(os.Args))
-	fmt.Println(os.Args[1:])
-	action, err := readargs(os.Args[1:])
+
+	flag.Parse()
+
+	if flag.NArg() < 1 {
+		usage()
+	}
+
+	args := flag.Args()
+
+	_, err := parseArgs(args)
 	if err != nil {
 		fmt.Println(err)
+		usage()
+		os.Exit(1)
 	}
-	result, err := executeoption(action, os.Args[2:])
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("Lets print something")
-	fmt.Println(action)
-	fmt.Println(result)
+
 }
