@@ -2,10 +2,56 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"path"
 )
 
-func InitTaskFile() error {
-	return nil
+const (
+	TODOFILE   = ".gotodo.txt"
+	FILEHEADER = "GOTODO\n========\n"
+)
+
+// Check if file ~/.gotodo exists
+// Create a new one if doesn't exists
+func InitTaskFile() (err error) {
+	// TODO: Fix to get $HOME environment variable
+	filepath := path.Join("/home/erich", TODOFILE)
+	if !fileExist(filepath) {
+		err = createNewFile(filepath)
+	}
+
+	err = writeStringToFile(filepath, FILEHEADER)
+	return err
+}
+
+func fileExist(filename string) bool {
+	if _, err := os.Stat(filename); os.IsNotExist(err) {
+		return false
+	}
+	return true
+}
+
+func createNewFile(filename string) error {
+	//f, err := os.Create(filename)
+	f, err := os.OpenFile(filename, os.O_CREATE|os.O_RDWR, 0666)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	return err
+}
+
+func writeStringToFile(filename, text string) (err error) {
+	// Ugly file opening, don't like the 0666..
+	f, err := os.OpenFile(filename, os.O_RDWR, 0666)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	if _, err = f.WriteString(text); err != nil {
+		panic(err)
+	}
+	return err
 }
 
 func AddTaskToFile(task string) error {

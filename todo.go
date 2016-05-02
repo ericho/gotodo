@@ -74,6 +74,7 @@ func main() {
 
 	args := flag.Args()
 
+	InitTaskFile()
 	_, err := parseArgs(args)
 	if err != nil {
 		fmt.Println(err)
