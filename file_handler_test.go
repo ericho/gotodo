@@ -23,3 +23,17 @@ func TestFileExistValidFile(t *testing.T) {
 		t.Fatal("Correct file doesn't exist.")
 	}
 }
+
+func TestReadFileIntoArray(t *testing.T) {
+	filename := "/proc/cpuinfo"
+	if l, _ := readFileIntoArray(filename); len(l) == 0 {
+		t.Fatal("File cannot be read")
+	}
+}
+
+func TestReadFileIntoArrayInvalidArgs(t *testing.T) {
+	filename := "Somefile.txt"
+	if l, err := readFileIntoArray(filename); len(l) != 0 && err != nil {
+		t.Fatal("File cannot be read")
+	}
+}

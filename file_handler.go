@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"path"
@@ -22,6 +23,37 @@ func InitTaskFile() (err error) {
 
 	err = writeStringToFile(filepath, FILEHEADER)
 	return err
+}
+
+func AddTaskToFile(task string) error {
+	if len(task) == 0 {
+		return fmt.Errorf("Empty tasks provided.")
+	}
+	fmt.Printf("Adding the task...")
+	return nil
+}
+
+func readFileIntoArray(filename string) (lines []string, err error) {
+	f, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines, nil
+}
+
+func MarkTaskAsDone(id int) error {
+	return nil
+}
+
+func ListAllTasks() error {
+	return nil
 }
 
 func fileExist(filename string) bool {
@@ -52,20 +84,4 @@ func writeStringToFile(filename, text string) (err error) {
 		panic(err)
 	}
 	return err
-}
-
-func AddTaskToFile(task string) error {
-	if len(task) == 0 {
-		return fmt.Errorf("Empty tasks provided.")
-	}
-	fmt.Printf("Adding the task...")
-	return nil
-}
-
-func MarkTaskAsDone(id int) error {
-	return nil
-}
-
-func ListAllTasks() error {
-	return nil
 }
