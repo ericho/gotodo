@@ -49,6 +49,10 @@ func createNewFile(filename string) error {
 	return err
 }
 
+func removeFile(filename string) error {
+	return os.Remove(filename)
+}
+
 func writeStringToFile(filename, text string) (err error) {
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0666)
 	if err != nil {

@@ -18,6 +18,15 @@ func InitTaskFile() (err error) {
 	return err
 }
 
+func ClearTaskFile() (err error) {
+	filename := getFileName()
+	err = removeFile(filename)
+	if err != nil {
+		panic(err)
+	}
+	return InitTaskFile()
+}
+
 func AddTaskToFile(task string) (err error) {
 	if len(task) == 0 {
 		return fmt.Errorf("Empty tasks provided.")

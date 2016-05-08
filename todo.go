@@ -12,15 +12,11 @@ func addNewTask(args []string) (int, error) {
 	}
 	err := AddTaskToFile(args[1])
 	fmt.Printf("Adding '%s' task.\n", args[1])
-	// Receive one parameter, a quoted string that will be added
-	// into the file .gotodo.txt
-	// Will read the ID and assign a new one for this task
 	return 0, err
 }
 
 func listTasks() (int, error) {
 	err := ListAllTasks()
-	// Will read the file content and print the list of tasks
 	return 0, err
 }
 
@@ -30,15 +26,13 @@ func doneTask(args []string) (int, error) {
 	}
 	MarkTaskAsDone(args[1])
 	fmt.Printf("Task '%s' marked as done.\n ", args[1])
-	// Receive an id number as a parameter, this tasks will be put
-	// done with the [x] mark
 	return 0, nil
 }
 
 func clearTasks() (int, error) {
-	fmt.Printf("Clearing all the tasks. Not implemented yet.\n")
-	// Delete all the file content and create a new header.
-	return 0, nil
+	err := ClearTaskFile()
+	fmt.Printf("Task file was reset.\n")
+	return 0, err
 }
 
 func parseArgs(args []string) (action int, err error) {
