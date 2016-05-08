@@ -11,7 +11,7 @@ func addNewTask(args []string) (int, error) {
 		return 0, fmt.Errorf("Incomplete arguments provided")
 	}
 	err := AddTaskToFile(args[1])
-	fmt.Printf("Adding '%s' task. Not implemented yet\n", args[1])
+	fmt.Printf("Adding '%s' task.\n", args[1])
 	// Receive one parameter, a quoted string that will be added
 	// into the file .gotodo.txt
 	// Will read the ID and assign a new one for this task
@@ -28,7 +28,8 @@ func doneTask(args []string) (int, error) {
 	if len(args) != 2 {
 		return 0, fmt.Errorf("Incomplete arguments provided")
 	}
-	fmt.Printf("Task '%s' marked as done. Not implemented yet.\n ", args[1])
+	MarkTaskAsDone(args[1])
+	fmt.Printf("Task '%s' marked as done.\n ", args[1])
 	// Receive an id number as a parameter, this tasks will be put
 	// done with the [x] mark
 	return 0, nil

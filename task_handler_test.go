@@ -38,3 +38,66 @@ func TestGetLastId(t *testing.T) {
 		t.Errorf("Bad last Id %d", id)
 	}
 }
+
+func TestMarkLineAsDoneValidString(t *testing.T) {
+	_, err := markLineAsDone("1     Some string")
+	if err != nil {
+		t.Errorf("Error not expected received")
+	}
+}
+
+func TestMarkLineAsDoneValidString2(t *testing.T) {
+	_, err := markLineAsDone("1 Some string")
+	if err != nil {
+		t.Errorf("Error not expected received")
+	}
+}
+
+func TestMarkLineAsDoneInvalidString(t *testing.T) {
+	_, err := markLineAsDone("1SomeString")
+	if err == nil {
+		t.Errorf("Error expected not received")
+	}
+}
+
+func TestIsDoneLine(t *testing.T) {
+	res := isDoneLine("1   Some string")
+	if res {
+		t.Errorf("Undone line was found as done")
+	}
+}
+
+func TestIsDoneLineDone(t *testing.T) {
+	res := isDoneLine("1 [x]  Some string")
+	if !res {
+		t.Errorf("Undone line was found as done")
+	}
+}
+
+func TestIsDoneInvalidDone(t *testing.T) {
+	res := isDoneLine("1[x] SomeString")
+	if res {
+		t.Errorf("Invalid done detected as valid")
+	}
+}
+
+func TestInsertDoneMark(t *testing.T) {
+	line := insertDoneMark("1 Some string")
+	if line != "1 [x] Some string" {
+		t.Errorf("Wrong string received")
+	}
+}
+
+func TestInsertDoneMark2(t *testing.T) {
+	line := insertDoneMark("1                  Some string")
+	if line != "1 [x] Some string" {
+		t.Errorf("Wrong string received")
+	}
+}
+
+func TestInsertDoneMark3(t *testing.T) {
+	line := insertDoneMark("1Some string")
+	if line != "1Some string" {
+		t.Errorf("Wrong string received")
+	}
+}

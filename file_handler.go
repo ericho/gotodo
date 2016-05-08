@@ -33,7 +33,6 @@ func readFileIntoArray(filename string) (lines []string, err error) {
 	return lines, nil
 }
 
-
 func fileExist(filename string) bool {
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
 		return false
@@ -58,6 +57,22 @@ func writeStringToFile(filename, text string) (err error) {
 	defer f.Close()
 	if _, err = f.WriteString(text); err != nil {
 		panic(err)
+	}
+	return err
+}
+
+func updateStringInFile(lines []string) (err error) {
+	filename := getFileName()
+	f, err := os.OpenFile(filename, os.O_CREATE|os.O_RDWR, 0666)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	for _, line := range lines {
+		if _, err = f.WriteString(line); err != nil {
+			panic(err)
+		}
 	}
 	return err
 }
