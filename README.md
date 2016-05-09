@@ -1,25 +1,46 @@
 # A simple TODO app written in go.
 
-This is a simple command line application to track TODO tasks. 
-Currently under development. 
+This is a simple command line application to track TODO tasks. gotodo creates a file under home directory called .gotodo.txt to store all the tasks. Every task has an id which will be used to mark the task as done. 
 
+## Installation
 
-TODO: 
-
-* Create command line parser, the following options should be supported.
-    * add : To add a new tasks, the argument should be a quoted string. e.g. gotodo add "Buy some food"
-    * list : List all the tasks availables, every tasks will be identified by a index. gotodo list
-    * done : Mark the tasks as done, the index should be used as a parameter. gotodo done 2
-    * clear : Clear all the tasks, this will delete all the content of the .gotodo.txt file.
-* Create and initialize a todo file. This file can be created in ~/.gotodo.txt and will have the following format
-
-```
-GOTODO
-==========
--     Buy some food
-- [x] Send an email to someone@gmail.com
--     Take lunch
+Requirements:
+Install Colourize package from https://github.com/TreyBastian/colourize
+``` 
+go get github.com/TreyBastian/colourize
 ```
 
-The done tasks will be mark as "[x]"
+Get the source code and install.
+```
+go get github.com/ericho/gotodo
+go install
+```
 
+## Usage
+
+gotodo is very simple, for adding a new task run:
+```
+gotodo add "This is my new task"
+```
+To see the list of the tasks run:
+```
+gotodo list
+```
+When a task is done, you can mark this task with:
+```
+gotodo done 1
+```
+where is the id number of the task
+
+To start over with all the tasks just run:
+```
+gotodo clear
+```
+
+## TODO
+
+* A refactor is needed, there are some repeated functions
+* Coverage is like 58%, that's not good in a project so small like this. 
+
+## Bugs
+A LOT!
