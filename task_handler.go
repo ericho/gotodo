@@ -112,7 +112,7 @@ func ListAllTasks() error {
 		panic(err)
 	}
 	for _, i := range lines {
-		fmt.Printf("%s\n", i)
+		TodoPrint(i)
 	}
 	return err
 }

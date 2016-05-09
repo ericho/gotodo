@@ -83,15 +83,15 @@ func TestIsDoneInvalidDone(t *testing.T) {
 
 func TestInsertDoneMark(t *testing.T) {
 	line := insertDoneMark("1 Some string")
-	if line != "1 [x] Some string" {
-		t.Errorf("Wrong string received")
+	if line != "1 [x] Some string\n" {
+		t.Errorf("Wrong string received: %s", line)
 	}
 }
 
 func TestInsertDoneMark2(t *testing.T) {
 	line := insertDoneMark("1                  Some string")
-	if line != "1 [x] Some string" {
-		t.Errorf("Wrong string received")
+	if line != "1 [x] Some string\n" {
+		t.Errorf("Wrong string received: %s", line)
 	}
 }
 
