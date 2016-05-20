@@ -2,6 +2,13 @@ package main
 
 import "testing"
 
+func TestClearTaskFile(t *testing.T) {
+	err := ClearTaskFile()
+	if err != nil {
+		t.Errorf("Error clearing task file")
+	}
+}
+
 func TestParseIdFromLine(t *testing.T) {
 	id, err := parseIdFromTaskLine("10 [x] Some task")
 	if err != nil {
@@ -99,5 +106,12 @@ func TestInsertDoneMark3(t *testing.T) {
 	line := insertDoneMark("1Some string")
 	if line != "1Some string" {
 		t.Errorf("Wrong string received")
+	}
+}
+
+func TestListAllTasks(t *testing.T) {
+	err := ListAllTasks()
+	if err != nil {
+		t.Errorf("Error listing tasks")
 	}
 }

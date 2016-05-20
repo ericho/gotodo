@@ -37,3 +37,23 @@ func TestReadFileIntoArrayInvalidArgs(t *testing.T) {
 		t.Fatal("File cannot be read")
 	}
 }
+
+func TestCreateNewFile(t *testing.T) {
+	filename := "somefile.txt"
+	err := createNewFile(filename)
+	if err != nil {
+		t.Fatal("Error creating file")
+	}
+}
+
+func TestRemoveFile(t *testing.T) {
+	filename := "somefile.txt"
+	err := createNewFile(filename)
+	if err != nil {
+		t.Fatal("Error creating file")
+	}
+	err = removeFile(filename)
+	if err != nil {
+		t.Fatal("Error removing file")
+	}
+}
