@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestCommandLineParser(t *testing.T) {
 	var s []string
@@ -29,7 +31,7 @@ func TestCommandLineParserWithList(t *testing.T) {
 func TestCommandLineParserWithDone(t *testing.T) {
 	s := []string{"done", "somestring"}
 	_, err := parseArgs(s)
-	if err != nil {
+	if err == nil {
 		t.Fatal("Error received")
 	}
 }
@@ -45,7 +47,7 @@ func TestCommandLineParserWithClear(t *testing.T) {
 func TestCommandLineParserWithInvalid(t *testing.T) {
 	s := []string{"invalid", "somestring"}
 	_, err := parseArgs(s)
-	if err != nil {
+	if err == nil {
 		t.Fatal("Incorrect action received")
 	}
 }
@@ -88,4 +90,8 @@ func TestDoneTask(t *testing.T) {
 	if err != nil {
 		t.Fatal("Error not expected received")
 	}
+}
+
+func TestUsage(t *testing.T) {
+	usage()
 }

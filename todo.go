@@ -24,7 +24,10 @@ func doneTask(args []string) (int, error) {
 	if len(args) != 2 {
 		return 0, fmt.Errorf("Incomplete arguments provided")
 	}
-	MarkTaskAsDone(args[1])
+	err := MarkTaskAsDone(args[1])
+	if err != nil {
+		return 0, err
+	}
 	fmt.Printf("Task '%s' marked as done.\n ", args[1])
 	return 0, nil
 }
@@ -36,7 +39,7 @@ func clearTasks() (int, error) {
 }
 
 func parseArgs(args []string) (action int, err error) {
-	if args == nil || flag.NArg() == 0 {
+	if args == nil || len(args) == 0 {
 		return 0, nil
 	}
 
@@ -56,7 +59,6 @@ func parseArgs(args []string) (action int, err error) {
 
 func usage() {
 	fmt.Fprintf(os.Stderr, "Usage: %s [add] <task> | [list] | [done] <task id> | [clear]\n", os.Args[0])
-	os.Exit(1)
 }
 
 func main() {
@@ -65,6 +67,7 @@ func main() {
 
 	if flag.NArg() < 1 {
 		usage()
+		os.Exit(1)
 	}
 
 	args := flag.Args()

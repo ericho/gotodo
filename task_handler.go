@@ -22,7 +22,7 @@ func ClearTaskFile() (err error) {
 	filename := getFileName()
 	err = removeFile(filename)
 	if err != nil {
-		panic(err)
+		return fmt.Errorf("File %s was not deleted", filename)
 	}
 	return InitTaskFile()
 }
@@ -40,7 +40,8 @@ func AddTaskToFile(task string) (err error) {
 func MarkTaskAsDone(id_str string) error {
 	id, err := strconv.ParseInt(id_str, 10, 64)
 	if err != nil {
-		panic(err)
+		err = fmt.Errorf("Invalid format for task ID")
+		return err
 	}
 
 	filename := getFileName()
@@ -132,11 +133,17 @@ func getLastId() (id int64) {
 	filename := getFileName()
 	lines, err := readFileIntoArray(filename)
 	if err != nil {
-		panic(err)
+		return -1
 	}
 	var lastId int64
 	for _, i := range lines {
-		lastId, _ = parseIdFromTaskLine(i)
+		if i != "GOTODO TASKS" && i != "========" {
+			fmt.Printf("Line %s\n", i)
+			lastId, err = parseIdFromTaskLine(i)
+			if err != nil {
+				return 0
+			}
+		}
 	}
 	return lastId
 }
