@@ -102,17 +102,17 @@ func TestInsertDoneMark3(t *testing.T) {
 	}
 }
 
-func TestListAllTasks(t *testing.T) {
-	err := ListAllTasks()
-	if err != nil {
-		t.Errorf("Error listing tasks")
-	}
-}
-
 func TestClearTaskFile(t *testing.T) {
 	InitTaskFile()
 	err := ClearTaskFile()
 	if err != nil {
 		t.Errorf("Error clearing task file")
+	}
+}
+
+func TestListAllTasks(t *testing.T) {
+	err := ListAllTasks()
+	if err != nil {
+		t.Errorf("Error listing tasks")
 	}
 }
