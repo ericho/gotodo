@@ -1,7 +1,7 @@
 # A simple TODO app written in go.
 
 [![Build Status](https://travis-ci.org/ericho/gotodo.png?branch=master)](https://travis-ci.org/ericho/gotodo)
-
+[![Coverage Status](https://coveralls.io/repos/github/ericho/gotodo/badge.svg?branch=master)](https://coveralls.io/github/ericho/gotodo?branch=master)
 This is a simple command line application to track TODO tasks. gotodo creates a file under home directory called .gotodo.txt to store all the tasks. Every task has an id which will be used to mark the task as done. 
 
 ![GOTODO](gotodo.png)
